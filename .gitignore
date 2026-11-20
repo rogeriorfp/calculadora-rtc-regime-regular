@@ -30,6 +30,7 @@ HELP.md
 target/
 calculadora/
 !**/src/main/**/calculadora/
+!**/src/test/**/calculadora/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
