@@ -1,13 +1,12 @@
 package br.gov.serpro.rtc.config.serializer;
 
+import java.util.function.Function;
+
+import lombok.extern.slf4j.Slf4j;
 import tools.jackson.core.JsonParser;
 import tools.jackson.databind.DeserializationContext;
 import tools.jackson.databind.ValueDeserializer;
 import tools.jackson.databind.exc.InvalidFormatException;
-import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
-import java.util.function.Function;
 
 /**
  * Implementa um deserializador Jackson genérico com validação de formato e

@@ -1,13 +1,11 @@
 package br.gov.serpro.rtc.config.serializer;
 
-import br.gov.serpro.rtc.shared.util.ArredondamentoUtils;
-
-import java.io.IOException;
 import java.math.BigDecimal;
 
+import br.gov.serpro.rtc.shared.util.ArredondamentoUtils;
 import tools.jackson.core.JsonGenerator;
-import tools.jackson.databind.ValueSerializer;
 import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
 /**
  * Serializador para o tipo TDec1302 (até 13 inteiros e 2 decimais, sempre com 2 casas decimais).
