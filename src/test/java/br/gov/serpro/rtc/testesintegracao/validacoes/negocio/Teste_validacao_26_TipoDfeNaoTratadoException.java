@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_CONTENT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -44,7 +44,7 @@ import br.gov.serpro.rtc.domain.service.exception.TipoDfeNaoTratadoException;
 @TestPropertySource(locations = "classpath:application-testes.yml")
 @ActiveProfiles("testes")
 class Teste_validacao_26_TipoDfeNaoTratadoException {
-	
+
     // ===== Constantes de Códigos de DFE =====
 	// Documentos tratados pela calculadora
     private static final int CODIGO_NFE = 55;
@@ -61,13 +61,13 @@ class Teste_validacao_26_TipoDfeNaoTratadoException {
     //private static final int CODIGO_NFSEVIA = 92;
     //private static final int CODIGO_BPETM = 93;
     //private static final int CODIGO_CTESIMPLIFICADO = 97;
-    
+
     // Documentos não tratados pela calculadora
     private static final int CODIGO_NFEABI = 77;
     private static final int CODIGO_DERE = 94;
     private static final int CODIGO_DIR = 95;
     private static final int CODIGO_DUIMP = 96;
-    
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -79,9 +79,9 @@ class Teste_validacao_26_TipoDfeNaoTratadoException {
 
     @Autowired
     private ObservabilidadeService observabilidadeService;
-    
+
     private OperacaoInput operacao;
-    
+
     private static final ProblemType ERRO = ProblemType.TIPO_DFE_NAO_TRATADO;
 
     @BeforeEach
@@ -107,7 +107,7 @@ class Teste_validacao_26_TipoDfeNaoTratadoException {
         assertThatThrownBy(() -> calculadoraService.calcularTributos(operacao))
                 .isExactlyInstanceOf(TipoDfeNaoTratadoException.class);
     }
-    
+
     @ParameterizedTest
     @MethodSource("cenariosDFeTratados")
     @DisplayName("API: Deve retornar 200 OK para DFe tratado (tpDoc: {0})")
@@ -122,17 +122,17 @@ class Teste_validacao_26_TipoDfeNaoTratadoException {
 
     @ParameterizedTest
     @MethodSource("cenariosDFeNaoTratados")
-    @DisplayName("API: Deve retornar 422 UNPROCESSABLE_ENTITY para DFe não tratado (tpDoc: {0})")
+    @DisplayName("API: Deve retornar 422 UNPROCESSABLE_CONTENT para DFe não tratado (tpDoc: {0})")
     void apiDeveRetornarErro422ParaDFeNaoTratado(int tpDoc) throws Exception {
     	operacao.setTpDoc(tpDoc);
         final String jsonContent = objectMapper.writeValueAsString(operacao);
         mockMvc.perform(post("/calculadora/regime-geral")
                 .contentType(APPLICATION_JSON)
                 .content(jsonContent))
-                .andExpect(status().is(UNPROCESSABLE_ENTITY.value()))
+                .andExpect(status().is(UNPROCESSABLE_CONTENT.value()))
                 .andExpect(jsonPath("$.title").value(ERRO.getTitulo()));
     }
-    
+
     // ===== Testes de Observabilidade =====
 
     @ParameterizedTest
@@ -156,34 +156,34 @@ class Teste_validacao_26_TipoDfeNaoTratadoException {
 						filteredOn(erro -> erro.title().equals(ERRO.getTitulo())).isNotEmpty();
 				});
     }
-    
+
     @ParameterizedTest
     @MethodSource("cenariosDFeTratados")
     @DisplayName("Observabilidade - API: Deve retornar 200 OK para DFe tratado (tpDoc: {0})")
     void observabilidadeApiDeveRetornarOkParaDFeTratado(int tpDoc) throws Exception {
         operacao.setTpDoc(tpDoc);
         final String jsonContent = objectMapper.writeValueAsString(operacao);
-        
+
         mockMvc.perform(post("/calculadora/observabilidade/regime-geral")
                 .contentType(APPLICATION_JSON)
                 .content(jsonContent))
-        		.andExpect(status().is(OK.value()));      
+        		.andExpect(status().is(OK.value()));
     }
 
     @ParameterizedTest
     @MethodSource("cenariosDFeNaoTratados")
-    @DisplayName("Observabilidade - API: Deve retornar 422 UNPROCESSABLE_ENTITY para DFe não tratado (tpDoc: {0})")
+    @DisplayName("Observabilidade - API: Deve retornar 422 UNPROCESSABLE_CONTENT para DFe não tratado (tpDoc: {0})")
     void observabilidadeApiDeveRetornarErro422ParaDFeNaoTratado(int tpDoc) throws Exception {
         operacao.setTpDoc(tpDoc);
         final String jsonContent = objectMapper.writeValueAsString(operacao);
-        
+
         mockMvc.perform(post("/calculadora/observabilidade/regime-geral")
                 .contentType(APPLICATION_JSON)
                 .content(jsonContent))
-        		.andExpect(status().is(UNPROCESSABLE_ENTITY.value()))
-                .andExpect(jsonPath("$.errors[0].title").value(ERRO.getTitulo()));      
+        		.andExpect(status().is(UNPROCESSABLE_CONTENT.value()))
+                .andExpect(jsonPath("$.errors[0].title").value(ERRO.getTitulo()));
     }
-    
+
     static Stream<Arguments> cenariosDFeTratados() {
     	return Stream.of(
     			arguments(CODIGO_NFE), arguments(CODIGO_CTE), arguments(CODIGO_NFCOM), arguments(CODIGO_BPE),
@@ -191,9 +191,9 @@ class Teste_validacao_26_TipoDfeNaoTratadoException {
     			arguments(CODIGO_NFGAS), arguments(CODIGO_BPETA), arguments(CODIGO_NFSE)
     			/*, arguments(CODIGO_NFSEVIA), arguments(CODIGO_BPETM), arguments(CODIGO_CTESIMPLIFICADO)*/);
     }
-    
+
     static Stream<Arguments> cenariosDFeNaoTratados() {
         return Stream.of(arguments(CODIGO_NFEABI), arguments(CODIGO_DERE), arguments(CODIGO_DIR), arguments(CODIGO_DUIMP));
-    }    
+    }
 
 }

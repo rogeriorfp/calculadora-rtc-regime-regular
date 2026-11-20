@@ -99,7 +99,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ValidacaoException.class)
     ResponseEntity<Object> handleNegocioException(ValidacaoException ex, WebRequest request) {
-        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+        HttpStatus status = HttpStatus.UNPROCESSABLE_CONTENT;
         ProblemDetail problemDetail = createProblem(ex, status);
         return handleExceptionInternal(ex, problemDetail, new HttpHeaders(), status, request);
     }

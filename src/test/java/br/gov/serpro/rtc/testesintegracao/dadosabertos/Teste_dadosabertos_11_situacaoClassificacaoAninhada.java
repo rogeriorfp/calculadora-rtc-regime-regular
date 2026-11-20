@@ -70,7 +70,7 @@ class Teste_dadosabertos_11_situacaoClassificacaoAninhada {
                 .param("siglaDfe", "XXXX")
                 .param("data", "2027-01-01")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnprocessableEntity());
+                .andExpect(status().isUnprocessableContent());
     }
 
     @Test
@@ -149,7 +149,7 @@ class Teste_dadosabertos_11_situacaoClassificacaoAninhada {
                 .param("siglaDfe", "XXXX")
                 .param("data", "2027-01-01")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnprocessableEntity());
+                .andExpect(status().isUnprocessableContent());
     }
 
     @Test

@@ -63,7 +63,7 @@ class Teste_000001_EquivalenciaAliquotasNominais {
         mockMvc.perform(post("/calculadora/regime-geral")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(operacao)))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isUnprocessableContent())
                 .andExpect(jsonPath("$.title").value("Alíquotas nominais não informadas"));
     }
 
@@ -78,7 +78,7 @@ class Teste_000001_EquivalenciaAliquotasNominais {
         mockMvc.perform(post("/calculadora/regime-geral")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(operacao)))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isUnprocessableContent())
                 .andExpect(jsonPath("$.title").value("Alíquotas nominais não informadas"));
     }
 

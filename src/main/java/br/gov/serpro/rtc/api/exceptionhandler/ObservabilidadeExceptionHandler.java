@@ -28,7 +28,7 @@ public class ObservabilidadeExceptionHandler {
 
     @ExceptionHandler(ErrosCalculoException.class)
     ResponseEntity<ProblemDetail> handleErrosCalculoException(ErrosCalculoException ex, WebRequest request) {
-        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+        HttpStatus status = HttpStatus.UNPROCESSABLE_CONTENT;
         List<ErroDetalhe> erros = ex.getErros();
 
         log.debug("Erros de observabilidade: {} erro(s) | URI: {}",
