@@ -5,14 +5,14 @@ package br.gov.serpro.rtc.api.exceptionhandler;
 
 import java.time.Instant;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -39,11 +39,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
-    
+
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(@NonNull Exception ex, @Nullable Object body, @NonNull HttpHeaders headers,
             @NonNull HttpStatusCode statusCode, @NonNull WebRequest request) {
-        
+
         // Estratégia simples: apenas erros 500+ são logados como ERROR (erros reais)
         // Erros 400-499 são comportamento esperado (erros de negócio/validação)
         if (statusCode.is5xxServerError()) {
@@ -52,14 +52,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         } else {
             // Erro de negócio/validação - log simples sem stacktrace
             log.debug("Erro cliente [{}]: {} | URI: {}",
-                     statusCode.value(), 
-                     ex.getMessage(), 
+                     statusCode.value(),
+                     ex.getMessage(),
                      request.getDescription(false));
         }
-        
+
         return super.handleExceptionInternal(ex, body, headers, statusCode, request);
     }
-    
+
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
             HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
@@ -68,12 +68,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         problemDetail.setDetail(ex.getLocalizedMessage());
         return handleExceptionInternal(ex, problemDetail, headers, httpStatus, request);
     }
-    
+
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Object> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, WebRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         ProblemDetail problemDetail = createProblem(ex, status);
-        problemDetail.setDetail(String.format("Parâmetro inválido [%s: %s] ", ex.getPropertyName(), ex.getValue()));        
+        problemDetail.setDetail(String.format("Parâmetro inválido [%s: %s] ", ex.getPropertyName(), ex.getValue()));
         return handleExceptionInternal(ex, problemDetail, new HttpHeaders(), status, request);
     }
 
@@ -81,16 +81,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(@NonNull MethodArgumentNotValidException ex,
             @NonNull HttpHeaders headers, @NonNull HttpStatusCode status, @NonNull WebRequest request) {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
-        
+
         // Log sucinto para validação - sem stacktrace
         log.debug("Validação falhou: {} campos inválidos | URI: {}",
                  ex.getBindingResult().getErrorCount(),
                  request.getDescription(false));
-        
+
         ProblemDetail problemDetail = createProblem(ex, httpStatus);
         problemDetail.setTitle("Campos inválidos.");
         StringBuilder detailMessage = new StringBuilder("Um ou mais campos são inválidos - ");
-        ex.getBindingResult().getFieldErrors().forEach(error -> 
+        ex.getBindingResult().getFieldErrors().forEach(error ->
             detailMessage.append(String.format("[%s: %s] ", error.getField(), error.getDefaultMessage()))
         );
         problemDetail.setDetail(detailMessage.toString());
@@ -131,10 +131,10 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     ResponseEntity<Object> handleEstruturaInconsistenteException(EstruturaInconsistenteException ex,
             WebRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        
+
         // Estrutura inconsistente - pode ser suspeito, usar WARN
         log.warn("Estrutura inválida: {} | URI: {}", ex.getMessage(), request.getDescription(false));
-        
+
         ProblemDetail problemDetail = createProblem(ex, status);
         return handleExceptionInternal(ex, problemDetail, new HttpHeaders(), status, request);
     }
