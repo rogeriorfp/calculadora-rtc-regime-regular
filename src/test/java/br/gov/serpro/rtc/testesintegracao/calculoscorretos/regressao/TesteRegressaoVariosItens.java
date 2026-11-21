@@ -186,7 +186,7 @@ class TesteRegressaoVariosItens {
         } else {
             if (!esperado.equals(obtido)) {
                 diferencas.add(String.format("[%s] Valor diferente. Esperado: %s, Obtido: %s",
-                        caminho, esperado.asText(), obtido.asText()));
+                        caminho, esperado.asString(), obtido.asString()));
             }
         }
 
