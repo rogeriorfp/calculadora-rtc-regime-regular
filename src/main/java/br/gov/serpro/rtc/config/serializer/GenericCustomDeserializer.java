@@ -32,7 +32,7 @@ public class GenericCustomDeserializer<T> extends ValueDeserializer<T> {
 
     @Override
     public T deserialize(JsonParser p, DeserializationContext ctxt) {
-        final var value = p.getText();
+        final var value = p.getString();
 
         if (!value.matches(pattern)) {
             throw new InvalidFormatException(p, getFormattedMessage(p), value, type);
@@ -47,6 +47,6 @@ public class GenericCustomDeserializer<T> extends ValueDeserializer<T> {
 
     private String getFormattedMessage(JsonParser p) {
         return String.format("Campo '%s' [%s] inválido. Formato esperado: '%s'. Exemplo de valor: '%s'",
-                p.currentName(), p.getText(), format, example);
+                p.currentName(), p.getString(), format, example);
     }
 }

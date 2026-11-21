@@ -21,7 +21,7 @@ class LocalDateCustomDeserializerTest {
     @Test
     void shouldDeserializeValidDate() throws Exception {
         JsonParser parser = mock(JsonParser.class);
-        when(parser.getText()).thenReturn("2026-01-15");
+        when(parser.getString()).thenReturn("2026-01-15");
         DeserializationContext context = mock(DeserializationContext.class);
 
         LocalDate result = deserializer.deserialize(parser, context);
@@ -44,7 +44,7 @@ class LocalDateCustomDeserializerTest {
     void shouldThrowExceptionForInvalidDate(String invalidDate) throws Exception {
         JsonParser parser = mock(JsonParser.class);
         when(parser.currentName()).thenReturn("nomeCampoData");
-        when(parser.getText()).thenReturn(invalidDate);
+        when(parser.getString()).thenReturn(invalidDate);
         DeserializationContext context = mock(DeserializationContext.class);
 
         assertThatThrownBy(() -> deserializer.deserialize(parser, context))

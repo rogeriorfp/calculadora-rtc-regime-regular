@@ -39,7 +39,7 @@ class OffsetDateTimeCustomDeserializerTest {
     void shouldDeserializeValidOffsetDateTime(String validDateTime) throws Exception {
 
         JsonParser parser = mock(JsonParser.class);
-        when(parser.getText()).thenReturn(validDateTime);
+        when(parser.getString()).thenReturn(validDateTime);
         DeserializationContext context = mock(DeserializationContext.class);
 
         OffsetDateTime result = deserializer.deserialize(parser, context);
@@ -71,7 +71,7 @@ class OffsetDateTimeCustomDeserializerTest {
     void shouldThrowExceptionForInvalidOffsetDateTime(String invalidDateTime) throws Exception {
         JsonParser parser = mock(JsonParser.class);
         when(parser.currentName()).thenReturn("nomeCampoData");
-        when(parser.getText()).thenReturn(invalidDateTime);
+        when(parser.getString()).thenReturn(invalidDateTime);
         DeserializationContext context = mock(DeserializationContext.class);
 
         assertThatThrownBy(() -> deserializer.deserialize(parser, context))
