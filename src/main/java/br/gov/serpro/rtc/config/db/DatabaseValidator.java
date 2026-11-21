@@ -1,6 +1,5 @@
 package br.gov.serpro.rtc.config.db;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 
@@ -22,8 +21,11 @@ public class DatabaseValidator {
     @Value("${application.db.filename}")
     private String dbFileName;
 
-    @Autowired
-    private Environment env;
+    private final Environment env;
+
+    DatabaseValidator(Environment env) {
+        this.env = env;
+    }
 
     @PostConstruct
     public void validateDatabaseName() throws Exception {
