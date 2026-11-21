@@ -9,6 +9,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 import br.gov.serpro.rtc.api.model.input.basecalculo.ComponentesBaseCalculoInput;
+import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.json.JsonMapper;
 
@@ -211,7 +212,7 @@ class ComponentesBaseCalculoInputTest {
 
         // Garante o roundtrip: serializa de volta e compara numericamente
         String jsonRoundTrip = MAPPER.writeValueAsString(operacao.getItens().get(0));
-        Map<String, Object> itemRoundTrip = MAPPER.readValue(jsonRoundTrip, Map.class);
+        Map<String, Object> itemRoundTrip = MAPPER.readValue(jsonRoundTrip, new TypeReference<>(){});
         assertThat(new BigDecimal(itemRoundTrip.get("baseCalculo").toString())).isEqualByComparingTo("850.00");
     }
 }
