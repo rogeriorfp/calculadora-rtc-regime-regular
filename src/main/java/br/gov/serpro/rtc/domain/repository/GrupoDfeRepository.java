@@ -10,7 +10,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import br.gov.serpro.rtc.domain.model.entity.GrupoDfe;
 
@@ -18,7 +17,6 @@ import br.gov.serpro.rtc.domain.model.entity.GrupoDfe;
  * Repositório Spring Data JPA para acesso a {@link GrupoDfe}, com consulta dos
  * tipos de DFe vigentes agrupados pela sua categoria.
  */
-@Repository
 public interface GrupoDfeRepository extends JpaRepository<GrupoDfe, Long> {
 
     /**

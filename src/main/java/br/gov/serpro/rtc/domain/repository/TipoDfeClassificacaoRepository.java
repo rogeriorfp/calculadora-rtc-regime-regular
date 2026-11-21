@@ -11,15 +11,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
 import br.gov.serpro.rtc.domain.model.entity.TipoDfeClassificacao;
 
 /**
  * Repositório Spring Data JPA para acesso a {@link TipoDfeClassificacao}, com
  * consulta dos vínculos vigentes entre tipo de DFe e classificação tributária.
  */
-@Repository
 public interface TipoDfeClassificacaoRepository extends JpaRepository<TipoDfeClassificacao, Long> {
 
     @Query("""

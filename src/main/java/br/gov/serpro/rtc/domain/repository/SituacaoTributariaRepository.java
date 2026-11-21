@@ -10,8 +10,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
 import br.gov.serpro.rtc.domain.model.entity.SituacaoTributaria;
 
 /**
@@ -19,7 +17,6 @@ import br.gov.serpro.rtc.domain.model.entity.SituacaoTributaria;
  * consultas de situações tributárias por tributo, validação de CST e busca por
  * código vigente.
  */
-@Repository
 public interface SituacaoTributariaRepository extends JpaRepository<SituacaoTributaria, Long> {
 
 	@Query("""

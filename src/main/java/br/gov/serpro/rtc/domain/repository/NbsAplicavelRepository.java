@@ -11,8 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
 import br.gov.serpro.rtc.domain.model.entity.NbsAplicavel;
 
 /**
@@ -21,7 +19,6 @@ import br.gov.serpro.rtc.domain.model.entity.NbsAplicavel;
  * listagem e validação de exceções para determinar se um serviço pode ser usado
  * em determinada classificação.
  */
-@Repository
 public interface NbsAplicavelRepository extends JpaRepository<NbsAplicavel, Long> {
 
     @Query("""
@@ -37,7 +34,7 @@ public interface NbsAplicavelRepository extends JpaRepository<NbsAplicavel, Long
     @Cacheable(cacheNames = "NbsAplicavelRepository.temNbsAplicavel")
     boolean temNbsAplicavel(
             @Param("nbs") String nbs,
-            @Param("idClassificacaoTributaria") Long idClassificacaoTributaria, 
+            @Param("idClassificacaoTributaria") Long idClassificacaoTributaria,
             @Param("data") LocalDate data);
 
     @Query("""
@@ -55,7 +52,7 @@ public interface NbsAplicavelRepository extends JpaRepository<NbsAplicavel, Long
     @Cacheable(cacheNames = "NbsAplicavelRepository.temExcecaoNbsAplicavel")
     boolean temExcecaoNbsAplicavel(
             @Param("nbs") String nbs,
-            @Param("idClassificacaoTributaria") Long idClassificacaoTributaria, 
+            @Param("idClassificacaoTributaria") Long idClassificacaoTributaria,
             @Param("data") LocalDate data);
 
     /*
@@ -78,7 +75,7 @@ public interface NbsAplicavelRepository extends JpaRepository<NbsAplicavel, Long
     @Cacheable(cacheNames = "NbsAplicavelRepository.temNbsAplicavelSemExcecao")
     boolean temNbsAplicavelSemExcecao(
             @Param("nbs") String nbs,
-            @Param("idClassificacaoTributaria") Long idClassificacaoTributaria, 
+            @Param("idClassificacaoTributaria") Long idClassificacaoTributaria,
             @Param("data") LocalDate data);
 
     /*
@@ -102,7 +99,7 @@ public interface NbsAplicavelRepository extends JpaRepository<NbsAplicavel, Long
         SELECT DISTINCT nbs.NBS_CD, nbs.NBS_DESCRICAO
         FROM NBS_APLICAVEL n
         JOIN NBS nbs ON nbs.NBS_CD = n.NBSA_NBS_CD
-        LEFT JOIN EXCECAO_NBS_APLICAVEL e ON e.ENBS_NBSA_ID = n.NBSA_ID 
+        LEFT JOIN EXCECAO_NBS_APLICAVEL e ON e.ENBS_NBSA_ID = n.NBSA_ID
             AND :data BETWEEN e.ENBS_INICIO_VIGENCIA AND COALESCE(e.ENBS_FIM_VIGENCIA, :data)
         JOIN CLASSIFICACAO_TRIBUTARIA ct ON ct.CLTR_ID = n.NBSA_CLTR_ID
         WHERE ct.CLTR_ID = :classificacaoId

@@ -11,15 +11,12 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
 import br.gov.serpro.rtc.domain.model.entity.Nbs;
 
 /**
  * Repositório Spring Data JPA para acesso a {@link Nbs}, com consultas de
  * descrição, existência e listagem de NBS vigentes.
  */
-@Repository
 public interface NbsRepository extends JpaRepository<Nbs, String> {
 
     @Query("""

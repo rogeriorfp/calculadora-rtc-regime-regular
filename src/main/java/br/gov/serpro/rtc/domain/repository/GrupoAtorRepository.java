@@ -10,7 +10,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import br.gov.serpro.rtc.domain.model.entity.GrupoAtor;
 
@@ -19,7 +18,6 @@ import br.gov.serpro.rtc.domain.model.entity.GrupoAtor;
  * dos atores vigentes agrupados por grupo de ator, opcionalmente filtrados
  * por papel (Fornecedor/Adquirente).
  */
-@Repository
 public interface GrupoAtorRepository extends JpaRepository<GrupoAtor, Long> {
 
     /**

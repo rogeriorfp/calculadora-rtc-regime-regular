@@ -9,8 +9,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
 import br.gov.serpro.rtc.api.model.output.nfse.NfseSituacaoClassificacaoOutput;
 import br.gov.serpro.rtc.domain.model.entity.IndicadorOpNbsClassificacao;
 
@@ -20,7 +18,6 @@ import br.gov.serpro.rtc.domain.model.entity.IndicadorOpNbsClassificacao;
  * classificação tributária e indicador de operação, além de dados usados na
  * determinação do local de incidência.
  */
-@Repository
 public interface IndicadorOperacaoRepository extends JpaRepository<IndicadorOpNbsClassificacao, Long> {
 
     @NativeQuery(value = """
@@ -34,7 +31,7 @@ public interface IndicadorOperacaoRepository extends JpaRepository<IndicadorOpNb
               AND io.IOIC_CD = :cIndOp
               AND (:cTribNac IS NULL OR c.CNIL_LSLC_CD = :cTribNac)
               AND c.CNIL_INICIO_VIGENCIA <= :dataOcorrenciaFatoGerador
-              AND (c.CNIL_FIM_VIGENCIA IS NULL 
+              AND (c.CNIL_FIM_VIGENCIA IS NULL
                    OR c.CNIL_FIM_VIGENCIA >= :dataOcorrenciaFatoGerador)
         )
             """)
@@ -46,7 +43,7 @@ public interface IndicadorOperacaoRepository extends JpaRepository<IndicadorOpNb
             @Param("dataOcorrenciaFatoGerador") String dataOcorrenciaFatoGerador);
 
     @NativeQuery(value = """
-        SELECT 
+        SELECT
             io.IOIC_CD_LOCAL_FORNECIMENTO_DFE,
             io.IOIC_CD_LOCAL_INCIDENCIA
         FROM INDICADOR_OPERACAO_IBS_CBS io
@@ -56,9 +53,9 @@ public interface IndicadorOperacaoRepository extends JpaRepository<IndicadorOpNb
     Object[] buscarLocalOperacaoPorIndOp(
             @Param("cIndOp") String cIndOp,
             @Param("data") String data);
-    
+
     @NativeQuery(value = """
-        SELECT 
+        SELECT
             io.IOIC_CD,
             io.IOIC_TIPO_OPERACAO,
             io.IOIC_CD_LOCAL_FORNECIMENTO_DFE,
@@ -74,7 +71,7 @@ public interface IndicadorOperacaoRepository extends JpaRepository<IndicadorOpNb
         ORDER BY io.IOIC_CD
         """)
     List<Object[]> buscarIndicadorOperacaoPorData(@Param("data") LocalDate data);
-    
+
     @NativeQuery(value = """
         SELECT DISTINCT
             io.IOIC_CD,
@@ -97,7 +94,7 @@ public interface IndicadorOperacaoRepository extends JpaRepository<IndicadorOpNb
     List<Object[]> buscarIndicadorOperacaoPorDataComNbs(
             @Param("data") LocalDate data,
             @Param("nbs") String nbs);
-    
+
     @NativeQuery(value = """
         SELECT DISTINCT
             st.SITR_CD AS codigoSituacaoTributaria,

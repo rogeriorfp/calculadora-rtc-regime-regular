@@ -10,7 +10,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import br.gov.serpro.rtc.domain.model.dto.AliquotaAdValoremDTO;
 import br.gov.serpro.rtc.domain.model.entity.AliquotaAdValoremServico;
@@ -21,7 +20,6 @@ import br.gov.serpro.rtc.domain.model.enumeration.TributoEnum;
  * com consultas da alíquota ad valorem de serviço por NBS, tributo,
  * classificação tributária e data.
  */
-@Repository
 public interface AliquotaAdValoremServicoRepository extends JpaRepository<AliquotaAdValoremServico, Long> {
 
     @Query("""

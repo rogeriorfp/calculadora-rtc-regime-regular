@@ -9,7 +9,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import br.gov.serpro.rtc.domain.model.dto.AliquotaAdRemDTO;
 import br.gov.serpro.rtc.domain.model.entity.AliquotaAdRemProduto;
@@ -19,7 +18,6 @@ import br.gov.serpro.rtc.domain.model.entity.AliquotaAdRemProduto;
  * consulta da alíquota ad rem por NCM, tributo e data, considerando exceções
  * vigentes.
  */
-@Repository
 public interface AliquotaAdRemProdutoRepository extends JpaRepository<AliquotaAdRemProduto, Long> {
 
     /*
@@ -28,7 +26,7 @@ public interface AliquotaAdRemProdutoRepository extends JpaRepository<AliquotaAd
     */
     @Query("""
             SELECT new br.gov.serpro.rtc.domain.model.dto.AliquotaAdRemDTO(
-                a.aliquotaAdRem.valor, 
+                a.aliquotaAdRem.valor,
                 a.aliquotaAdRem.unidadeMedida.sigla)
             FROM AliquotaAdRemProduto a
             WHERE EXISTS (

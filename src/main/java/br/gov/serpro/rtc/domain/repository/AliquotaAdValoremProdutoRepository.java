@@ -9,7 +9,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import br.gov.serpro.rtc.domain.model.dto.AliquotaAdValoremDTO;
 import br.gov.serpro.rtc.domain.model.entity.AliquotaAdValoremProduto;
@@ -20,7 +19,6 @@ import br.gov.serpro.rtc.domain.model.enumeration.TributoEnum;
  * com consulta da alíquota ad valorem de produto por NCM, tributo e data,
  * considerando exceções vigentes.
  */
-@Repository
 public interface AliquotaAdValoremProdutoRepository extends JpaRepository<AliquotaAdValoremProduto, Long> {
 
     @Query("""

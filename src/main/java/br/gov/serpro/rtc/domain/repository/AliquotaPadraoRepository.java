@@ -9,7 +9,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import br.gov.serpro.rtc.domain.model.dto.AliquotaResultadoDTO;
 import br.gov.serpro.rtc.domain.model.entity.AliquotaPadrao;
@@ -19,13 +18,12 @@ import br.gov.serpro.rtc.domain.model.entity.AliquotaPadrao;
  * composição com alíquotas de referência. Aplica filtros de vigência e
  * localização para recuperar a alíquota efetiva usada no cálculo tributário.
  */
-@Repository
 public interface AliquotaPadraoRepository extends JpaRepository<AliquotaPadrao, Long> {
 
     @Query("""
             SELECT new br.gov.serpro.rtc.domain.model.dto.AliquotaResultadoDTO(
-                r.valor, 
-                p.valor, 
+                r.valor,
+                p.valor,
                 p.formaAplicacao
             )
             FROM AliquotaReferencia r
@@ -48,8 +46,8 @@ public interface AliquotaPadraoRepository extends JpaRepository<AliquotaPadrao, 
     @Cacheable(cacheNames = "AliquotaPadraoRepository.buscarAliquota")
     AliquotaResultadoDTO buscarAliquota(
             @Param("idTributo") long idTributo,
-            @Param("codigoUf") Long codigoUf, 
-            @Param("municipio") Long municipio, 
+            @Param("codigoUf") Long codigoUf,
+            @Param("municipio") Long municipio,
             @Param("data") LocalDate data);
 
 }

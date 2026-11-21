@@ -4,7 +4,6 @@
 package br.gov.serpro.rtc.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -16,7 +15,6 @@ import java.util.List;
  * Repositório Spring Data JPA para acesso a {@link Municipio}, com validação de
  * municípios por código e UF e listagem por unidade federativa.
  */
-@Repository
 public interface MunicipioRepository extends JpaRepository<Municipio, Long> {
 
     @Query("""
@@ -33,8 +31,8 @@ public interface MunicipioRepository extends JpaRepository<Municipio, Long> {
             @Param("uf") String uf);
 
     @Query("""
-            SELECT 
-            CASE 
+            SELECT
+            CASE
                 WHEN COUNT(m) = 0 THEN 1
                 WHEN COUNT(m) > 0 AND LOWER(m.uf.sigla) != LOWER(:siglaUf) THEN 2
                 ELSE 0

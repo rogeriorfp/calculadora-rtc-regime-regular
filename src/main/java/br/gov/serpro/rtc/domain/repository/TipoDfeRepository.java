@@ -10,8 +10,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
 import br.gov.serpro.rtc.domain.model.entity.TipoDfe;
 
 /**
@@ -19,7 +17,6 @@ import br.gov.serpro.rtc.domain.model.entity.TipoDfe;
  * tipo de documento fiscal vigente pelo seu código numérico ({@code TPDF_TIPO},
  * ex.: 55 = NF-e, 65 = NFC-e).
  */
-@Repository
 public interface TipoDfeRepository extends JpaRepository<TipoDfe, Long> {
 
     /*

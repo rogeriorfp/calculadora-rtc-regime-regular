@@ -8,8 +8,6 @@ import java.time.LocalDate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
 import br.gov.serpro.rtc.domain.model.entity.TributoSituacaoTributaria;
 
 /**
@@ -17,7 +15,6 @@ import br.gov.serpro.rtc.domain.model.entity.TributoSituacaoTributaria;
  * com consulta do tributo vinculado a uma situação tributária em determinada
  * data.
  */
-@Repository
 public interface TributoSituacaoTributariaRepository extends JpaRepository<TributoSituacaoTributaria, Long> {
 
     @Query(value = """

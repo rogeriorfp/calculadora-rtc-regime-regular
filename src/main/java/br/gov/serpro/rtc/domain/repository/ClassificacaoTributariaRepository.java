@@ -11,7 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import br.gov.serpro.rtc.domain.model.dto.ClassificacaoTributariaCalculoDTO;
 import br.gov.serpro.rtc.domain.model.dto.ClassificacaoTributariaDTO;
@@ -22,9 +21,9 @@ import br.gov.serpro.rtc.domain.model.entity.ClassificacaoTributaria;
  * com consultas por código e tributo, dados resumidos para cálculo e
  * classificações de serviço sem vínculo de NBS.
  */
-@Repository
+
 public interface ClassificacaoTributariaRepository extends JpaRepository<ClassificacaoTributaria, Long> {
-    
+
     /*
      * Entradas recomendadas na cache: 1.600
      * Memória estimada: ~384 KB
@@ -41,7 +40,7 @@ public interface ClassificacaoTributariaRepository extends JpaRepository<Classif
             AND :data BETWEEN st.SITR_INICIO_VIGENCIA AND COALESCE(st.SITR_FIM_VIGENCIA, :data)
             AND :data BETWEEN tst.TRST_INICIO_VIGENCIA AND COALESCE(tst.TRST_FIM_VIGENCIA, :data)
             AND :data BETWEEN tb.TBTO_INICIO_VIGENCIA AND COALESCE(tb.TBTO_FIM_VIGENCIA, :data)
-            """, 
+            """,
             sqlResultSetMapping = "ClassificacaoTributariaDTOMapping")
     @Cacheable(cacheNames = "ClassificacaoTributariaRepository.buscarClassificacaoTributaria")
     ClassificacaoTributariaDTO buscarClassificacaoTributaria(
@@ -51,11 +50,11 @@ public interface ClassificacaoTributariaRepository extends JpaRepository<Classif
 
     @Query(value = """
             SELECT new br.gov.serpro.rtc.domain.model.dto.ClassificacaoTributariaCalculoDTO(
-                    ct.id, 
-                    ct.codigo, 
-                    ct.tipoAliquota, 
-                    ct.inGrupoMonofasiaPadrao, 
-                    ct.inGrupoMonofasiaReten, 
+                    ct.id,
+                    ct.codigo,
+                    ct.tipoAliquota,
+                    ct.inGrupoMonofasiaPadrao,
+                    ct.inGrupoMonofasiaReten,
                     ct.inGrupoMonofasiaRet,
                     ct.inGrupoMonofasiaDiferimento,
                     ct.situacaoTributaria.inGrupoReducao

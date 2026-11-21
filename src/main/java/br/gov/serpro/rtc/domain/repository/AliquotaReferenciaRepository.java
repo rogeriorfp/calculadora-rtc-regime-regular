@@ -10,15 +10,12 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
 import br.gov.serpro.rtc.domain.model.entity.AliquotaReferencia;
 
 /**
  * Repositório Spring Data JPA para acesso a {@link AliquotaReferencia}, com
  * consulta da alíquota de referência por tributo e data de vigência.
  */
-@Repository
 public interface AliquotaReferenciaRepository extends JpaRepository<AliquotaReferencia, Long> {
 
     @Query("""

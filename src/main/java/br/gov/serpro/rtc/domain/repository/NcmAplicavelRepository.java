@@ -9,8 +9,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
 import br.gov.serpro.rtc.domain.model.entity.NcmAplicavel;
 
 /**
@@ -19,7 +17,6 @@ import br.gov.serpro.rtc.domain.model.entity.NcmAplicavel;
  * pode ser enquadrada em determinada classificação, considerando exceções e
  * vigência.
  */
-@Repository
 public interface NcmAplicavelRepository extends JpaRepository<NcmAplicavel, Long> {
 
     @Query("""
@@ -34,7 +31,7 @@ public interface NcmAplicavelRepository extends JpaRepository<NcmAplicavel, Long
     @Cacheable(cacheNames = "NcmAplicavelRepository.temNcmAplicavel")
     boolean temNcmAplicavel(
             @Param("ncm") String ncm,
-            @Param("idClassificacaoTributaria") Long idClassificacaoTributaria, 
+            @Param("idClassificacaoTributaria") Long idClassificacaoTributaria,
             @Param("data") LocalDate data);
 
     @Query("""
@@ -51,7 +48,7 @@ public interface NcmAplicavelRepository extends JpaRepository<NcmAplicavel, Long
     @Cacheable(cacheNames = "NcmAplicavelRepository.temExcecaoNcmAplicavel")
     boolean temExcecaoNcmAplicavel(
             @Param("ncm") String ncm,
-            @Param("idClassificacaoTributaria") Long idClassificacaoTributaria, 
+            @Param("idClassificacaoTributaria") Long idClassificacaoTributaria,
             @Param("data") LocalDate data);
 
     /*
@@ -73,9 +70,9 @@ public interface NcmAplicavelRepository extends JpaRepository<NcmAplicavel, Long
     @Cacheable(cacheNames = "NcmAplicavelRepository.temNcmAplicavelSemExcecao")
     boolean temNcmAplicavelSemExcecao(
             @Param("ncm") String ncm,
-            @Param("idClassificacaoTributaria") Long idClassificacaoTributaria, 
+            @Param("idClassificacaoTributaria") Long idClassificacaoTributaria,
             @Param("data") LocalDate data);
-    
+
     /*
      * Entradas recomendadas na cache: 400
      * Memória estimada: ~45 KB
